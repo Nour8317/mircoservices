@@ -1,9 +1,9 @@
 import express from 'express';
+import { Kafka } from 'kafkajs'; 
 
 const app = express();
 app.use(express.json());
 
-import { Kafka } from 'kafkajs'; 
 
 const kafka = new Kafka({
   clientId: "payment-service",
@@ -18,9 +18,17 @@ const connectToKafka = async () => {
 }
 
 
-app.post('/payments', (req, res) => {
+app.post('/payments', async (req, res) => {
   const payment = req.body;
   console.log('Received payment:', payment);
+
+  await producer.send({
+    topic: 'payment-successful',
+    messages: [
+      { value: JSON.stringify(payment) }
+    ]
+  });
+
   res.status(201).send({ message: 'Payment processed successfully' });
 });
 
