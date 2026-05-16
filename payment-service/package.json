@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage --passWithNoTests"
+  },
+  "jest": {
+    "testMatch": ["**/tests/**/*.test.js"]
   },
   "keywords": [],
   "author": "",
@@ -13,5 +16,8 @@
   "dependencies": {
     "express": "^5.2.1",
     "kafkajs": "^2.2.4"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2"
   }
 }
