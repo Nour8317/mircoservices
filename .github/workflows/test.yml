@@ -19,10 +19,12 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install dependencies
+      - name: Install dependencies and run tests for all services
         run: |
-          npm install
-
-      - name: Run tests
-        run: |
-          npm test
+          for dir in analytic-service email-service kafka order-service payment-service; do
+            echo "Running npm install and test in $dir"
+            cd $dir
+            npm install
+            npm test
+            cd ..
+          done
